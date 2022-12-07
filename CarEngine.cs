@@ -162,7 +162,7 @@ public class CarEngine : MonoBehaviour
             Debug.Log("안해");
         }
     }
-
+    
     private void ApplySteer()
     {
         if (avoiding) return;
@@ -170,7 +170,7 @@ public class CarEngine : MonoBehaviour
         float newSteer = relativeVector.x / relativeVector.magnitude * maxSteerAngle * 0.3f;
         targetSteerAngle = newSteer;
     }
-
+    //바퀴에 모터토크 넣기
     private void Drive()
     {
         currentSpeed = Rig.velocity.magnitude * 3.6f;
@@ -187,7 +187,7 @@ public class CarEngine : MonoBehaviour
             wheelFR.motorTorque = 0;
         }
     }
-
+    //일정이상 움직이지 않으면 텔레포트
     private void Teleport()
     {
         if (currentSpeed < 2f)
@@ -208,7 +208,7 @@ public class CarEngine : MonoBehaviour
             currentSpeed = 60f;
             Count = 0;
         }
-
+        //텔레포트후 
         if (Flash)
         {
             GetComponentInChildren<MeshRenderer>().enabled = false;
@@ -256,7 +256,7 @@ public class CarEngine : MonoBehaviour
             }
         }
     }
-
+    
     private void CheckWaypointDistance()
     {
         if (Vector3.Distance(transform.position, nodes[currectNode].position) < 15f && Vector3.Distance(transform.position, nodes[currectNode].position) >1.1f)
@@ -282,7 +282,7 @@ public class CarEngine : MonoBehaviour
         //    }
         //}
     }
-
+    
     private void Breaking()
     {
         if (isBreaking == true && currentSpeed > 60f)
@@ -300,14 +300,15 @@ public class CarEngine : MonoBehaviour
             wheelRR.motorTorque = maxMotorTorque;
         }
     }
-
+    //angle회전
     private void LerpToSteerAngle()
     {
         wheelFL.steerAngle = Mathf.Lerp(wheelFL.steerAngle, targetSteerAngle, Time.deltaTime * TurnSpeed);
         wheelFR.steerAngle = Mathf.Lerp(wheelFR.steerAngle, targetSteerAngle, Time.deltaTime * TurnSpeed);
 
     }
-
+    
+    //후진
     private void BackDriving()
     {
         if(Back.BackDrive)
@@ -329,6 +330,7 @@ public class CarEngine : MonoBehaviour
     //    BackDrive = true;
     //}
 
+    //WayPoint 충돌시 다음노드로 
      void OnTriggerEnter(Collider coll)
     {
 
